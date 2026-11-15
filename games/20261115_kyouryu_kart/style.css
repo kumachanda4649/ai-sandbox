@@ -1,0 +1,288 @@
+:root {
+  --ink: #24180f;
+  --paper: #fff8ee;
+  --gold: #ffe066;
+  --red: #e03131;
+  --green: #2f9e44;
+  --blue: #3b5bdb;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  background: #1d3a18;
+  font-family: "Hiragino Maru Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#view {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #3f7a32;
+}
+
+#hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.panel {
+  position: absolute;
+  top: max(10px, env(safe-area-inset-top));
+  min-width: 132px;
+  padding: 8px 12px 10px;
+  border-radius: 16px;
+  background: rgba(18, 28, 16, 0.72);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.panel.left { left: max(10px, env(safe-area-inset-left)); }
+.panel.right {
+  right: max(10px, env(safe-area-inset-right));
+  text-align: right;
+}
+
+.rank-row { display: flex; align-items: baseline; gap: 6px; }
+#rank-num { font-size: 34px; font-weight: 900; color: var(--gold); line-height: 1; }
+#rank-total { font-size: 13px; opacity: 0.85; }
+#lap { margin-top: 2px; font-size: 16px; font-weight: 800; }
+
+#order {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+#order li { white-space: nowrap; }
+#order li.me { color: var(--gold); font-weight: 800; }
+
+.label { font-size: 11px; letter-spacing: 0.08em; opacity: 0.8; }
+#time { font-size: 26px; font-weight: 900; font-variant-numeric: tabular-nums; }
+#total, #best, #item { font-size: 12px; margin-top: 2px; font-variant-numeric: tabular-nums; }
+#item { font-weight: 800; color: #ffd8a8; }
+
+#mute {
+  pointer-events: auto;
+  margin-top: 6px;
+  border: 0;
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#drift {
+  position: absolute;
+  left: 50%;
+  bottom: calc(118px + env(safe-area-inset-bottom));
+  width: min(280px, 64vw);
+  height: 14px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+}
+#drift-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #74c0fc, #ffe066 70%, #ff922b);
+}
+
+#hint {
+  position: absolute;
+  left: 50%;
+  top: max(12px, env(safe-area-inset-top));
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+#toast {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 42px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 4px 0 #e67700, 0 10px 18px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+}
+#toast.on { opacity: 1; }
+
+#countdown {
+  position: fixed;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  padding-bottom: 18vh;
+  font-size: min(22vw, 112px);
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 6px 0 #1b4332, 0 14px 24px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+#overlay, #result {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(12, 24, 10, 0.38);
+}
+
+.card, #result .card {
+  width: min(440px, 100%);
+  max-height: min(92vh, 760px);
+  overflow: auto;
+  padding: 22px 22px 18px;
+  border-radius: 24px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--green);
+}
+h1, h2 { margin: 4px 0 8px; line-height: 1.2; }
+h1 { font-size: 34px; }
+h2 { font-size: 28px; }
+.lead { margin: 0 0 14px; line-height: 1.6; }
+
+button, .btn {
+  font-family: inherit;
+}
+
+#start, #retry, #back {
+  display: block;
+  width: 100%;
+  margin: 8px 0 12px;
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--red);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+}
+#back {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid rgba(36, 24, 15, 0.2);
+}
+
+.help, .laps {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(36, 24, 15, 0.1);
+  font-weight: 700;
+}
+.row.me { color: #c92a2a; }
+
+.pad {
+  position: fixed;
+  z-index: 6;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  bottom: max(12px, env(safe-area-inset-bottom));
+}
+.pad-left { left: max(12px, env(safe-area-inset-left)); }
+.pad-right { right: max(12px, env(safe-area-inset-right)); }
+
+.btn {
+  width: 74px;
+  height: 74px;
+  border-radius: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.72);
+  background: rgba(20, 24, 20, 0.55);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.1;
+  white-space: nowrap;
+  touch-action: none;
+}
+.btn.accel {
+  width: 96px;
+  height: 96px;
+  background: var(--red);
+  font-size: 16px;
+}
+.btn.drift, .btn.item { width: 96px; font-size: 15px; }
+.btn.drift { background: var(--blue); }
+.btn.item { background: #f08c00; color: #2b2118; }
+.btn.held { transform: translateY(2px) scale(0.97); filter: brightness(1.12); }
+
+#fatal {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  z-index: 30;
+  margin: 0;
+  color: #fff;
+  background: #c92a2a;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+[hidden] { display: none !important; }
+
+@media (max-width: 720px) {
+  #rank-num { font-size: 28px; }
+  #time { font-size: 22px; }
+  .panel { min-width: 0; padding: 6px 8px 8px; }
+  #order { display: none; }
+  #hint { display: none; }
+  h1 { font-size: 28px; }
+  .btn { width: 58px; height: 58px; border-radius: 16px; font-size: 12px; }
+  .btn.drift, .btn.item { width: 68px; font-size: 11px; }
+  .btn.accel { width: 74px; height: 74px; font-size: 12px; }
+  #toast { font-size: 32px; }
+}
+
+@media (pointer: coarse) {
+  #hint { display: none; }
+}
