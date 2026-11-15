@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="description" content="恐竜がカートで走る、上から見下ろす3周レース">
+<title>きょうりゅうカート</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%235c8a32' width='16' height='16'/%3E%3Ccircle cx='9' cy='8' r='4' fill='%23e03131'/%3E%3Ccircle cx='11' cy='7' r='1' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="view" width="1280" height="720"></canvas>
+
+<div id="hud" hidden>
+  <section class="panel left" aria-label="順位">
+    <div class="rank-row">
+      <span id="rank-num">1位</span>
+      <span id="rank-total">/ 4台</span>
+    </div>
+    <div id="lap">1 / 3 周</div>
+    <ol id="order"></ol>
+  </section>
+  <section class="panel right" aria-label="タイム">
+    <div class="label">ラップ</div>
+    <div id="time">0:00.00</div>
+    <div id="total">合計 0:00.00</div>
+    <div id="best">ベスト --:--.--</div>
+    <div id="item">アイテム なし</div>
+    <button id="mute" type="button">音オン</button>
+  </section>
+  <div id="drift" hidden aria-hidden="true"><div id="drift-fill"></div></div>
+  <p id="hint">↑アクセル　←→ハンドル　Spaceドリフト　Zアイテム</p>
+  <div id="toast" aria-live="polite"></div>
+</div>
+
+<div id="countdown" hidden aria-live="assertive"></div>
+
+<div id="overlay">
+  <div class="card">
+    <p class="eyebrow">3周レース</p>
+    <h1>きょうりゅうカート</h1>
+    <p class="lead">ティラノのカートで、ライバル3台と1つのコースを走る。</p>
+    <button id="start" type="button">レースをはじめる</button>
+    <ul class="help">
+      <li>アクセルで進み、左右でハンドルを切る。</li>
+      <li>曲がりながらドリフトを押し続け、はなすと短い加速。</li>
+      <li>道の箱でアイテムを1こだけ持てる。使ってから次を拾える。</li>
+      <li>キーボード: ↑↓アクセルとブレーキ、←→またはA D、SpaceかShiftでドリフト、ZかEでアイテム、Mで音。</li>
+      <li>スマホ: 下のボタン。</li>
+    </ul>
+  </div>
+</div>
+
+<div id="result" hidden></div>
+
+<div class="pad pad-left" hidden>
+  <button type="button" class="btn" data-act="left" aria-label="左">左</button>
+  <button type="button" class="btn" data-act="right" aria-label="右">右</button>
+</div>
+<div class="pad pad-right" hidden>
+  <button type="button" class="btn item" data-act="item" aria-label="アイテム">アイテム</button>
+  <button type="button" class="btn drift" data-act="drift" aria-label="ドリフト">ドリフト</button>
+  <button type="button" class="btn accel" data-act="accel" aria-label="アクセル">アクセル</button>
+</div>
+
+<p id="fatal" hidden></p>
+<script src="game.js"></script>
+</body>
+</html>
